@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [showForm, setShowForm] = useState(false);
   const [formType, setFormType] = useState("signup");
-  const [slideClass, setSlideClass] = useState(""); // "" | slide-in | slide-out
+  const [slideClass, setSlideClass] = useState("");
+  const [rememberMe, setRememberMe] = useState(false); // NEW STATE
   const navigate = useNavigate();
 
-  // ✅ Redirect to /dashboard if user is already logged in
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
     if (token) {
       navigate("/dashboard");
     }
@@ -20,11 +20,10 @@ const Home = () => {
   const openForm = (type) => {
     setFormType(type);
     setShowForm(true);
-    setSlideClass(""); // reset to default
+    setSlideClass("");
   };
 
   useEffect(() => {
-    // Add slide-in class one frame after render
     if (showForm) {
       requestAnimationFrame(() => {
         setSlideClass("slide-in");
@@ -39,18 +38,14 @@ const Home = () => {
     setSlideClass("slide-out");
     setTimeout(() => {
       setShowForm(false);
-    }, 400); // match with CSS duration
+    }, 400);
   };
 
   return (
     <div className="home-container">
       <div className="top-right-buttons">
-        <button className="login-btn" onClick={handleLoginClick}>
-          Login
-        </button>
-        <button className="signup-btn" onClick={handleSignupClick}>
-          Signup
-        </button>
+        <button className="login-btn" onClick={handleLoginClick}>Login</button>
+        <button className="signup-btn" onClick={handleSignupClick}>Signup</button>
       </div>
 
       <div className="company-name">
@@ -59,10 +54,13 @@ const Home = () => {
 
       {showForm && (
         <div className={`auth-panel ${slideClass}`}>
-          <button className="close-btn" onClick={handleCloseForm}>
-            &times;
-          </button>
-          <AuthForm formType={formType} setFormType={setFormType} />
+          <button className="close-btn" onClick={handleCloseForm}>&times;</button>
+          <AuthForm
+            formType={formType}
+            setFormType={setFormType}
+            rememberMe={rememberMe}
+            setRememberMe={setRememberMe}
+          />
         </div>
       )}
     </div>

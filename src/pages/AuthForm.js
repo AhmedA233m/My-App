@@ -3,22 +3,28 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/AuthForm.css";
 
-const AuthForm = ({ formType, setFormType }) => {
+const AuthForm = ({ formType, setFormType, rememberMe, setRememberMe }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
-    const fname = document.querySelector('input[placeholder="First Name"]').value;
-    const lname = document.querySelector('input[placeholder="Last Name"]').value;
-    const email = document.querySelector('.signup-form input[placeholder="Email"]').value;
-    const password = document.querySelector('.signup-form input[placeholder="Password"]').value;
+    const fname = document.querySelector(
+      'input[placeholder="First Name"]'
+    ).value;
+    const lname = document.querySelector(
+      'input[placeholder="Last Name"]'
+    ).value;
+    const email = document.querySelector(
+      '.signup-form input[placeholder="Email"]'
+    ).value;
+    const password = document.querySelector(
+      '.signup-form input[placeholder="Password"]'
+    ).value;
 
     try {
       const response = await fetch("http://localhost:8000/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fname, lname, email, password }),
       });
 
@@ -37,8 +43,12 @@ const AuthForm = ({ formType, setFormType }) => {
   };
 
   const handleLogin = async () => {
-    const email = document.querySelector('.login-form input[placeholder="Email"]').value;
-    const password = document.querySelector('.login-form input[placeholder="Password"]').value;
+    const email = document.querySelector(
+      '.login-form input[placeholder="Email"]'
+    ).value;
+    const password = document.querySelector(
+      '.login-form input[placeholder="Password"]'
+    ).value;
 
     const params = new URLSearchParams();
     params.append("username", email); // FastAPI expects "username"
@@ -48,16 +58,18 @@ const AuthForm = ({ formType, setFormType }) => {
       setLoading(true);
       const response = await fetch("http://localhost:8000/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: params.toString(),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.access_token);
+        if (rememberMe) {
+          localStorage.setItem("token", data.access_token);
+        } else {
+          sessionStorage.setItem("token", data.access_token);
+        }
         navigate("/dashboard");
       } else {
         alert(data.detail || "Login failed");
@@ -72,7 +84,11 @@ const AuthForm = ({ formType, setFormType }) => {
 
   return (
     <div className="auth-slider-wrapper">
-      <div className={`form-slider ${formType === "login" ? "show-login" : "show-signup"}`}>
+      <div
+        className={`form-slider ${
+          formType === "login" ? "show-login" : "show-signup"
+        }`}
+      >
         {/* Signup Form */}
         <div className="form-content signup-form">
           <h2>Sign Up</h2>
@@ -94,6 +110,31 @@ const AuthForm = ({ formType, setFormType }) => {
           <h2>Login</h2>
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
+
+          {/* ✅ Remember Me Checkbox */}
+          <div className="remember-me-checkbox">
+            <input
+              type="checkbox"
+              id="rememberMe"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            <label htmlFor="rememberMe">Remember Me</label>
+          </div>
+
+          {/* ✅ Forgot Password Link */}
+          <p
+            style={{
+              cursor: "pointer",
+              color: "#007bff",
+              marginBottom: "10px",
+              fontSize: "14px",
+            }}
+            onClick={() => navigate("/forgot-password")}
+          >
+            Forgot Password?
+          </p>
+
           <button onClick={handleLogin} disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
