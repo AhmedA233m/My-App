@@ -1,0 +1,38 @@
+.recent-activity {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px 30px;
+  margin: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.recent-activity h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.recent-activity ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-activity li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.recent-activity li:last-child {
+  border-bottom: none;
+}
+
+.recent-activity .time {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.recent-activity .desc {
+  color: #555;
+}

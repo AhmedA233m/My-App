@@ -1,0 +1,91 @@
+/* src/components/Home.css */
+
+.home-container {
+  height: 100vh;
+  background-image: url('../assets/bg.jpg'); 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.top-right-buttons {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.login-btn,
+.signup-btn {
+  margin-left: 10px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.signup-btn {
+  background-color: white;
+  color: black;
+}
+
+.login-btn {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+
+.company-name {
+  position: absolute;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 2.5rem;
+}
+
+.auth-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 33.33%;
+  background-color: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.auth-panel.slide-in {
+  transform: translateX(0%);
+}
+
+.auth-panel.slide-out {
+  transform: translateX(100%);
+}
+
+/* Hidden off-screen before mount (optional enhancement) */
+.auth-panel:not(.slide-in):not(.slide-out) {
+  transform: translateX(100%);
+}
+/* Close button inside auth-panel */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  z-index: 10;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  color: red;
+}

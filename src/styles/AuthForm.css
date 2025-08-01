@@ -1,0 +1,68 @@
+.auth-slider-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.form-slider {
+  width: 100%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-slider.show-signup {
+  transform: translateY(0%);
+}
+
+.form-slider.show-login {
+  transform: translateY(-50%);
+}
+
+.form-content {
+  height: 50%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.name-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.name-fields input {
+  flex: 1;
+}
+
+.form-content input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-content button {
+  padding: 10px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form-content p {
+  font-size: 0.9rem;
+}
+
+.form-content span {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
